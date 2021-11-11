@@ -37,11 +37,20 @@ def getPercDf(df):
 
 def createDistinctExcel(df, listOfIndex,listOfDistinctColumns):
     dateTime = datetime.datetime.now().strftime("%d%m%Y_%H%M")
-    otinanai = pd.DataFrame()
+    allEntries = pd.DataFrame()
+    allShortlists = pd.DataFrame()
+    allWinners = pd.DataFrame()
+
     print(''.join(str(e) for e in listOfIndex).join("{}.xlsx").format(dateTime))
     writingFile = pd.ExcelWriter(''.join(str(e) for e in listOfIndex)+"{}.xlsx".format(dateTime),engine= "xlswriter" )
     for column in listOfDistinctColumns:
-        otinanai ["column"] =df.groupby(listOfIndex)[column].nunique()
+        allEntries [column] =df.groupby(listOfIndex)[column].nunique()
+        allShortlists [column] =df[df["Shortlist"] ==1].groupby(listOfIndex)[column].nunique()
+        allWinners [column] =df[df["Winners"].notnull()].groupby(listOfIndex)[column].nunique()
 
-    otinanai.to_excel(writingFile,sheet_name= "{} unique {}".format(listOfIndex,column))
+    allEntries.to_excel(writingFile,sheet_name= "{} unique All entries {}".format(listOfIndex,column))
+    allShortlists.to_excel(writingFile,sheet_name= "{} unique shortlists {}".format(listOfIndex,column))
+    allWinners.to_excel(writingFile,sheet_name= "{} unique winners {}".format(listOfIndex,column))
+
+
 
