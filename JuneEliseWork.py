@@ -7,9 +7,9 @@ from imports import *
 def createPivotTables(df,listOfIndex):
     listForNewDf = copy.deepcopy(listOfIndex)
     listOfIndex.append("FestivalYear")
-    dfAll = df.groupby(listOfIndex)["All Entries"].count().reset_index().pivot("All Entries",listForNewDf, "FestivalYear")
-    dfShortlisted = df.groupby(listOfIndex)["Shortlist"].count().reset_index().pivot("Shortlist",listForNewDf, "FestivalYear")
-    dfWinners = df.groupby(listOfIndex)["Winner"].count().reset_index().pivot("Winner",listForNewDf, "FestivalYear")
+    dfAll = df.groupby(listOfIndex)["All Entries"].count().reset_index().pivot(listForNewDf,  "FestivalYear","All Entries")
+    dfShortlisted = df.groupby(listOfIndex)["Shortlist"].count().reset_index().pivot(listForNewDf, "FestivalYear","Shortlist")
+    dfWinners = df.groupby(listOfIndex)["Winner"].count().reset_index().pivot(listForNewDf, "FestivalYear","Winner")
 
     dfAllPerc = getPercDf(dfAll)
     dfShortlistedPerc = getPercDf(dfShortlisted)
@@ -22,7 +22,8 @@ def getPercDf(df):
     dfNew = pd.DataFrame()
 
     for column in df:
-        dfNew[getVariableName(column)] = df[column] / df[column].sum()
+        dfNew[column] = df[column] / df[column].sum()
     return dfNew
 
 skata = createPivotTables(df, ["Country"])
+

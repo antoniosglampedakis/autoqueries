@@ -13,6 +13,8 @@ from sklearn.linear_model import LinearRegression
 import datetime
 import copy
 from tkinter import filedialog
+from varname import  nameof
+
 
 from JuneEliseWork import *
 from functionsForFirstForm import *
