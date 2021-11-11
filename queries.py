@@ -69,7 +69,7 @@ and ped.Cancelled <> 1
 
 notTagsQuery = tagsquery = \
 '''select ed.FestivalYear,  ec.FestivalCode, ec.EntryTypeName as Award, ec.MediaDescription, ec.CategoryDescription as "Category Description",
-ED.Advertiser, ED.short as Shortlist,  ed.EntryId as "All Entries",ed.Product, ed.title,
+ED.Advertiser, ED.short as Shortlist,  ed.EntryId as "All Entries",ed.Product, ed.Title,
 ED.AwardCountCode as Winner, ED.PrizeCode, ED.CategoryCode as "Cat Code",  ed.CategorySubTypeID, ed.CatalogueNo,
 cd.CompanyName, CD.NetworkCode, cd.NetworkName, CD.UltimateHoldingCompanyName,  
 cd.Country, cd.GroupCompanyName, cd.coTown, cd.CompanyType, cd.RegionName,

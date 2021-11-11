@@ -118,3 +118,8 @@ def getClearList(list):
     if "FestivalYears" in list:
         list.remove("FestivalYears")
     return list
+
+def getVariableName(variable):
+    variableName =   f'{variable=}'.split('=')[0]
+
+    return  variableName

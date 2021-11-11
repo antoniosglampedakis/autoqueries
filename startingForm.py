@@ -234,7 +234,7 @@ def selectUsefulColumns():#TODO:
 
     continueButton = tk.Button(selectingUsefulColumnsScreen, text = "Click to continue", command = lambda:
     afterSelectingColumns(yearGrouping.get(), [listOfColumnsList.get(values) for values in listOfColumnsList.curselection()],
-                          selectingUsefulColumnsScreen, 0))
+                          selectingUsefulColumnsScreen, addPivotTablesButton.get))
     continueButton.pack()
 
 
