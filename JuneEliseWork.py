@@ -54,3 +54,22 @@ def createDistinctExcel(df, listOfIndex,listOfDistinctColumns):
 
 
 
+def gettingEarliestOccurance (df,columns, year):
+    winners = df[(df["FestivalYear"] == year) & df["Winner"].notnull()]
+    shortlisted = df[(df["FestivalYear"] == year) & df["Shortlist"] ==1]
+    Appearences = df[(df["FestivalYear"] == year) ]
+    dateTime = datetime.datetime.now().strftime("%d%m%Y_%H%M")
+
+    writingFile =pd.ExcelWriter( "first appearences{}.xlsx".format(dateTime),engine= "xlswriter" )
+    for column in columns:
+        WinnersDF = pd.DataFrame()
+        WinnersDF["Winners2021"] = winners[column].unique
+        WinnersDF[column] = df[df[column].isin(WinnersDF["Winners2021"])].groupby(column)["FestivalYear"].min()
+
+        shortlistedDf = pd.DataFrame()
+        shortlistedDf["Shortlisted2021"] = shortlisted[column].unique
+        shortlistedDf[column] = df[df[column].isin(shortlistedDf["Shortlisted2021"])].groupby(column)["FestivalYear"].min()
+
+        ApparencesDF = pd.DataFrame()
+        ApparencesDF["appearences2021"] = Appearences[column].unique
+        ApparencesDF[column] = df[df[column].isin(ApparencesDF["appearences2021"])].groupby(column)["FestivalYear"].min()
