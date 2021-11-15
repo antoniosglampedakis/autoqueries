@@ -67,18 +67,22 @@ def gettingEarliestOccurance (df,columns, year):
     for column in columns:
         WinnersDF = pd.DataFrame()
         WinnersDF["Winners2021"] = winners[column].unique()
-        WinnersDF[column] = df[df[column].isin(WinnersDF["Winners2021"])].groupby(column)["FestivalYear"].min()
-        WinnersDF.to_excel(writingFile, sheet_name= column+"Winners")
+        WinnersDF = WinnersDF.set_index("Winners2021")
+        WinnersDF[column] = df[df[column].isin(WinnersDF.index)].groupby(column)["FestivalYear"].min()
+        WinnersDF.to_excel(writingFile, sheet_name= column+" Winners")
 
         shortlistedDf = pd.DataFrame()
         shortlistedDf["Shortlisted2021"] = shortlisted[column].unique()
-        shortlistedDf[column] = df[df[column].isin(shortlistedDf["Shortlisted2021"])].groupby(column)["FestivalYear"].min()
-        shortlistedDf.to_excel(writingFile, sheet_name= column+"Shortlisted")
+        shortlistedDf = shortlistedDf.set_index("Shortlisted2021")
 
+        shortlistedDf[column] = df[df[column].isin(shortlistedDf.index)].groupby(column)["FestivalYear"].min()
+        shortlistedDf.to_excel(writingFile, sheet_name= column+" Shortlisted")
 
         AppearencesDF = pd.DataFrame()
-        AppearencesDF["appearences2021"] = Appearences[column].unique()
-        AppearencesDF[column] = df[df[column].isin(AppearencesDF["appearences2021"])].groupby(column)["FestivalYear"].min()
-        WinnersDF.to_excel(writingFile, sheet_name= column+"Appearences")
+        AppearencesDF["Appearences2021"] = Appearences[column].unique()
+        AppearencesDF = AppearencesDF.set_index("Appearences2021")
+
+        AppearencesDF[column] = df[df[column].isin(AppearencesDF.index)].groupby(column)["FestivalYear"].min()
+        AppearencesDF.to_excel(writingFile, sheet_name= column+" Appearences")
 
     writingFile.save()
