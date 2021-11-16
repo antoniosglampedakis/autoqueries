@@ -54,10 +54,13 @@ def createDistinctExcel(df, listOfIndex,listOfDistinctColumns):
 
 
 
-def gettingEarliestOccurance (df,columns, year):
-    winners = df[(df["FestivalYear"] == year) & (df["Winner"].notnull())]
-    shortlisted = df[(df["FestivalYear"] == year) & (df["Shortlist"] ==1)]
-    Appearences = df[(df["FestivalYear"] == year)]
+def findsecondlargest(list):
+    if len(list) >=2:
+        return np.sort(list)[-2]
+    else:
+        return 0
+
+def gettingEarliestOccurance (df,columns, year): #some results seem fake
     dateTime = datetime.datetime.now().strftime("%d%m%Y_%H%M")
 
     if isinstance(columns, str):
@@ -65,24 +68,41 @@ def gettingEarliestOccurance (df,columns, year):
 
     writingFile =pd.ExcelWriter( "first appearences{}.xlsx".format(dateTime),engine= "xlsxwriter" )
     for column in columns:
+        df = df.dropna(subset=[column])
+        df[column] = df[column].str.lstrip()
+        df[column] = df[column].str.rstrip()
+        winners = df[(df["FestivalYear"] == year) & (df["Winner"].notnull())]
+        shortlisted = df[(df["FestivalYear"] == year) & (df["Shortlist"] == 1)]
+        Appearences = df[(df["FestivalYear"] == year)]
         WinnersDF = pd.DataFrame()
         WinnersDF["Winners2021"] = winners[column].unique()
         WinnersDF = WinnersDF.set_index("Winners2021")
-        WinnersDF[column] = df[df[column].isin(WinnersDF.index)].groupby(column)["FestivalYear"].min()
+        otinanai = '|'.join(pd.Series(WinnersDF.index))
+
+        WinnersDF[column+" min"] = df[df[column].str.contains('|'.join(otinanai))].groupby(column)["FestivalYear"].min()
+        WinnersDF[column+" max"] = df[df[column].str.contains('|'.join(otinanai))].groupby(column)["FestivalYear"] \
+            .unique().apply(lambda x: findsecondlargest(x))
         WinnersDF.to_excel(writingFile, sheet_name= column+" Winners")
 
         shortlistedDf = pd.DataFrame()
         shortlistedDf["Shortlisted2021"] = shortlisted[column].unique()
         shortlistedDf = shortlistedDf.set_index("Shortlisted2021")
+        otinanai = '|'.join(pd.Series(shortlistedDf.index))
 
-        shortlistedDf[column] = df[df[column].isin(shortlistedDf.index)].groupby(column)["FestivalYear"].min()
+        shortlistedDf[column+" min"] = df[df[column].str.contains('|'.join(otinanai))].groupby(column)["FestivalYear"].min()
+        shortlistedDf[column+" max"] = df[df[column].str.contains('|'.join(otinanai))].groupby(column)["FestivalYear"] \
+            .unique().apply(lambda x: findsecondlargest(x))
         shortlistedDf.to_excel(writingFile, sheet_name= column+" Shortlisted")
 
         AppearencesDF = pd.DataFrame()
         AppearencesDF["Appearences2021"] = Appearences[column].unique()
         AppearencesDF = AppearencesDF.set_index("Appearences2021")
+        otinanai = '|'.join(pd.Series(AppearencesDF.index))
+        AppearencesDF[column+" min"] = df[df[column].str.contains('|'.join(otinanai))].groupby(column)["FestivalYear"].min()
+        AppearencesDF[column +" max"] = df[df[column].str.contains('|'.join(otinanai))].groupby(column)["FestivalYear"] \
+            .unique().apply(lambda x: findsecondlargest(x))
 
-        AppearencesDF[column] = df[df[column].isin(AppearencesDF.index)].groupby(column)["FestivalYear"].min()
         AppearencesDF.to_excel(writingFile, sheet_name= column+" Appearences")
 
     writingFile.save()
+gettingEarliestOccurance(df, column, 2021)
