@@ -21,22 +21,23 @@ def createSecondScreen():
     secondScreen.configure(background = "Pink")
 
 
-    awardWindowButton = tk.Button(secondScreen, text="Click to configure award", command=lambda: createAwardWindow(df))
+    awardWindowButton = tk.Button(secondScreen, text="Click to configure award", command=lambda: createAwardWindow(df, secondScreen))
     awardWindowButton.pack()
 
-    companyWindowButton = tk.Button(secondScreen, text="Click to enter name of company", command = lambda: createCompanyWindow())
+    companyWindowButton = tk.Button(secondScreen, text="Click to enter name of company", command = lambda: createCompanyWindow(df, secondScreen))
     companyWindowButton.pack()
 
     lionsDataStoriesButton = tk.Button(secondScreen,text = "Click to configure data stories", command = lambda: eliseStories())
     lionsDataStoriesButton.pack()
 
     if tagsComboBoxValue == YesTags:
-        tagButton = tk.Button(secondScreen, text="Click to enter tag name", command= lambda: createTagWindow())
+        tagButton = tk.Button(secondScreen, text="Click to enter tag name", command= lambda: createTagWindow(secondScreen))
         tagButton.pack()
 
   #  resetButton = tk.Button(secondScreen,text = "click to reset choises", command = lambda: resetChoices(secondScreen))
   #  resetButton.pack()
-    continueButton = tk.Button(secondScreen, text = "Click to continue", command = lambda: selectUsefulColumns())
+    continueButton = tk.Button(secondScreen, text = "Click to continue"
+                   , command = lambda: selectUsefulColumns(df, secondScreen, startingWindow))
     continueButton.pack()
 
 
