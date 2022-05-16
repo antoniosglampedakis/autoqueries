@@ -35,7 +35,7 @@ def createExcel(series, name, writer, index):
     # pretty sure it is not best practice...
     # if we have two columns we want to input/group by, it is being naturally as a list in the argumentsfor groupby
     # but not passed in the name of the spreadsheet. thats why I did thte following:
-    print("mpainei sto gamimeno creating excel?")
+
     if type(name) is not str:
         name = ''.join(name)
     ######    series.to_excel(writer, sheet_name=name)
@@ -99,8 +99,6 @@ def combineYears(*args):
 
 def createStartingDf(dfQuery,conn):
     df = pd.read_sql(dfQuery, conn)
-    df["FestivalYear"] = df["FestivalYear"].replace(2020, 2021)
-    df["FestivalYear"] = df["FestivalYear"].replace(2021, '2021/2021')
     return df
 
 def getWindow(window):
@@ -123,3 +121,37 @@ def getVariableName(variable):
     variableName =   f'{variable=}'.split('=')[0]
 
     return  variableName
+
+def correctingDf (df):
+    #df = df.apply(lambda x: x.astype(str).str.strip() if x.dtype == "object" else x)
+    df = correcting2021Year(df)
+    df["Shortlist"] = df["Shortlist"].fillna(0)
+    df = correctingEntrytypeNames(df)
+    df = correctingFinalAwards(df)
+    return df
+
+def correcting2021Year (df):
+    df["FestivalYear"] = df["FestivalYear"].replace(2020, 2021)
+    df["FestivalYear"] = df["FestivalYear"].replace(2021, '2020/2021')
+    return df
+def correctingEntrytypeNames(df):
+    df["AwardFinal"] = df["Award"]
+    df["AwardFinal"] = df["Award"].replace("Glass: The Lion For Change", "Glass")
+    df["AwardFinal"] = df["Award"].replace("Glass - The Lion For Change", "Glass")
+    df["AwardFinal"] = df["Award"].replace("Entertainment Lions for Music",
+                                                            "Entertainment Lions For Music")
+    df["AwardFinal"] = df["Award"].replace("Entertainment for Music", "Entertainment Lions For Music")
+    return df
+
+def correctingRegionNames(df):
+
+    df["RegionNameFinal"] = df["RegionName"]
+
+    df.loc[(df["RegionNameFinal"] == "ASIA"), "RegionNameFinal"] = "APAC"
+    df.loc[(df["RegionNameFinal"] == "AUSTRALIA & SOUTH PACIFIC"), "RegionNameFinal"] = "APAC"
+    df.loc[(df["RegionNameFinal"] == "EASTERN EUROPE"), "RegionNameFinal"] = "EUROPE"
+    return df
+
+def correctingFinalAwards(df):
+    df["Winner"] = df["Winner"].replace("CEFP", "GP")
+    return df

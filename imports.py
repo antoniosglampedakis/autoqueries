@@ -17,7 +17,6 @@ from varname import  nameof
 
 
 from JuneEliseWork import *
-from functionsForFirstForm import *
 from functions import *
 from queries import *
 
@@ -51,25 +50,6 @@ Tags = ['Adapted Music', 'Animation', 'Art Direction', 'Casting', 'UX & journey 
         'Parents & families', 'Seniors', 'Gen Z ', 'Gen X  ', 'Parents & Families', 'Teenagers', 'Over-75s',
         'Students', 'LGBT+ ', 'Gamers']
 
-listOfAwards = ['Social & Influencer', 'Media Lions', 'Film', 'Pharma', 'Creative eCommerce Lions', 'Entertainment',
-                'Outdoor', 'PR Lions', 'Creative Effectiveness', 'Glass: The Award for Change', 'Integrated',
-                'Brand Experience & Activation Lions', 'Industry Craft Lions', 'Integrated Lions', 'Print & Publishing',
-                'Direct Lions', 'Health and Wellness Lions', 'Creative Strategy', 'Film Lions', 'Digital Craft Lions',
-                'Creative Effectiveness Lions', 'Product Design Lions', 'Print & Outdoor Craft', 'Healthcare',
-                'Press Lions', 'Radio & Audio', 'Health & Wellness', 'Radio', 'Print & Poster Craft', 'Pharma Lions',
-                'Titanium and Integrated Lions', 'Interactive', 'Creative Data Lions', 'Cyber', 'Media', 'Titanium',
-                'Film Craft', 'Direct', 'Cyber Lions', 'Health & Wellness Lions', 'PR', 'Entertainment Lions',
-                'Entertainment Lions For Sport', 'Brand Experience & Activation', 'Radio Lions', 'Titanium Lions',
-                'Entertainment Lions for Music', 'Sustainable Development Goals Lions', 'Design Lions',
-                'Industry Craft', 'Glass - The Award for Change', 'Glass - The Lion For Change',
-                'Branded Content & Entertainment Lions', 'Print', 'Film Craft Lions', 'Promo & Activation ',
-                'Glass Lion', 'Print & Publishing Lions', 'Sustainable Development Goals', 'Press',
-                'Radio & Audio Lions', 'Craft:Print & Poster', 'Glass: The Lion For Change', 'Craft:Film',
-                'Innovation Lions', 'Glass Lions', 'Creative eCommerce', 'Digital Craft', 'Outdoor Lions',
-                'Digital', 'Grand Prix For Good', 'Grand Prix For Good Health', 'Mobile Lions',
-                'Branded Content & Entertainment ', 'Innovation', 'Design', 'Mobile', 'Promo & Activation Lions',
-                'Creative Data', 'Social & Influencer Lions', 'Music', 'Health and Wellness',
-                'Creative Business Transformation']
 
 
 

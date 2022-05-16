@@ -60,6 +60,8 @@ def findsecondlargest(list):
     else:
         return 0
 
+
+
 def gettingEarliestOccurance (df,columns, year): #some results seem fake
     dateTime = datetime.datetime.now().strftime("%d%m%Y_%H%M")
 
@@ -105,4 +107,7 @@ def gettingEarliestOccurance (df,columns, year): #some results seem fake
         AppearencesDF.to_excel(writingFile, sheet_name= column+" Appearences")
 
     writingFile.save()
-gettingEarliestOccurance(df, column, 2021)
+
+
+
+
